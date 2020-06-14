@@ -28,7 +28,7 @@ From the project root (one level up unfortunately) run:
 now dev
 ```
 
-This will include the API. For the connection to the db to work, you need a `.env` file in this directory (`./frontend`) with the mongodb connection string from the mongodb atlas console. **Be carful not to check this file into github**
+This will include the API. For the connection to the db to work, you need a `.env` file in this directory (`./app`) with the mongodb connection string from the mongodb atlas console. **Be carful not to check this file into github**
 
 Example `.env`:
 
