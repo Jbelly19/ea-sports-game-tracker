@@ -8,12 +8,15 @@
     "start": "next start"
   },
   "dependencies": {
+    "mongodb": "^3.5.5",
     "next": "^9.3.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "vercel": "^19.1.0"
   },
   "devDependencies": {
+    "@now/node": "^1.5.0",
+    "@types/mongodb": "^3.5.4",
     "@types/node": "^13.9.5",
     "@types/react": "^16.9.27",
     "@typescript-eslint/eslint-plugin": "^2.25.0",
