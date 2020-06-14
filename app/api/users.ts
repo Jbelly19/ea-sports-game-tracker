@@ -40,7 +40,7 @@ module.exports = async (req: NowRequest, res: NowResponse) => {
   // console.log(db);
 
   // Select the "users" collection from the database
-  const collection = await db.collection('data');
+  const collection = await db.collection('users');
 
   // Select the users collection from the database
   const users = await collection.find().limit(5).toArray();
