@@ -1,7 +1,0 @@
-{
-  "name": "ea-sports-game-tracker",
-  "version": 2,
-  "env": {
-    "MONGODB_URI": "@game-tracker-mongodb-uri"
-  }
-}
