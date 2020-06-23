@@ -1,16 +1,20 @@
 import fetch from 'isomorphic-unfetch';
 import { NextPage } from 'next';
+import { useState } from 'react';
 
 interface User {
   username: string;
   name: string;
 }
 
-interface HomeProps {
+interface UserProps {
   users: User[];
 }
 
-const Home: NextPage<HomeProps> = ({ users }: HomeProps) => {
+const User: NextPage<UserProps> = ({ users }: UserProps) => {
+  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
+
   return (
     <div>
       {users.map(({ name, username }, index) => {
@@ -23,14 +27,46 @@ const Home: NextPage<HomeProps> = ({ users }: HomeProps) => {
           </ul>
         );
       })}
+      <form>
+        <input
+          type="text"
+          placeholder="username"
+          onChange={(e) => {
+            setUsername(e.target.value);
+          }}
+        />
+        <input
+          type="text"
+          placeholder="name"
+          onChange={(e) => {
+            setName(e.target.value);
+          }}
+        />
+        <button
+          type="submit"
+          onClick={async (e) => {
+            e.preventDefault();
+            const res = await fetch('http://localhost:3000/api/users', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ name, username }),
+            });
+            console.log(res);
+          }}
+        >
+          Submit
+        </button>
+      </form>
     </div>
   );
 };
 
-Home.getInitialProps = async () => {
+User.getInitialProps = async () => {
   const res = await fetch('http://localhost:3000/api/users');
   const json = await res.json();
   return { users: json.users };
 };
 
-export default Home;
+export default User;
