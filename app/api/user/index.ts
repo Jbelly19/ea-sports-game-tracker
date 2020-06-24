@@ -1,11 +1,15 @@
-import { mongoMiddleware } from '../lib/api/mongoMiddleware';
-import { apiHandler } from '../lib/api/apiHandler';
+import { mongoMiddleware } from '../../lib/api/mongoMiddleware';
+import { apiHandler } from '../../lib/api/apiHandler';
 
 export default mongoMiddleware(async (req, res, connection, models) => {
-  const { method } = req;
+  const {
+    query: { name },
+    method,
+  } = req;
+
   apiHandler(res, method, {
-    GET: (response) => {
-      models.User.find({}, (error, user) => {
+    POST: (response) => {
+      models.User.create({ name }, (error, user) => {
         if (error) {
           connection.close();
           response.status(500).json({ error });

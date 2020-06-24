@@ -1,32 +1,29 @@
 import fetch from 'isomorphic-unfetch';
 import { NextPage } from 'next';
 import { useState } from 'react';
+import Link from 'next/link';
+import { UserType } from '../types/user';
+import { UserSchema } from '../models/User';
 
-interface User {
-  username: string;
-  name: string;
+interface UsersProps {
+  users: UserType[];
 }
 
-interface UserProps {
-  users: User[];
-}
-
-const User: NextPage<UserProps> = ({ users }: UserProps) => {
+const Users: NextPage<UsersProps> = ({ users }: UsersProps) => {
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
 
   return (
     <div>
-      {users.map(({ name, username }, index) => {
-        return (
-          <ul key={index}>
-            <li>
-              <h1>Name: {name}</h1>
-              <h3>Username: {username}</h3>
-            </li>
-          </ul>
-        );
-      })}
+      <ul>
+        {users.map((user) => (
+          <li key={user._id}>
+            <Link href="/user/[id]" as={`/user/${user._id}`}>
+              <a>{`User ${user.name}`}</a>
+            </Link>
+          </li>
+        ))}
+      </ul>
       <form>
         <input
           type="text"
@@ -63,10 +60,10 @@ const User: NextPage<UserProps> = ({ users }: UserProps) => {
   );
 };
 
-User.getInitialProps = async () => {
+Users.getInitialProps = async () => {
   const res = await fetch('http://localhost:3000/api/users');
-  const json = await res.json();
-  return { users: json.users };
+  const users = await res.json();
+  return { users };
 };
 
-export default User;
+export default Users;
